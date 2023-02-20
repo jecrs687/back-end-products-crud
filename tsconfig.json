@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es2021",
+    "types": ["jest"],
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "paths": {
+      "@infra/*":["./infra/*"],
+      "@api/*":["./api/*"],
+      "@domain/*":["./domain/*"],
+      "@db":["./infra/configs/db.ts"],
+
+    },
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  }
+}

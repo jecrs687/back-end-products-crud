@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "ignorePatterns": ["*/node_modules/*", ".next/*", ".out/*", "!.prettierrc.js"],
+    "extends": "standard-with-typescript",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["./tsconfig.json"]
+
+    },
+    "rules": {
+        "@typescript-eslint/prefer-nullish-coalescing": 0,
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/no-invalid-void-type": 0,
+        "@typescript-eslint/no-misused-promises": 0,
+        "@typescript-eslint/indent": ["error", 5]
+    }
+}
