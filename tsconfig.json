@@ -1,4 +1,11 @@
 {
+  "ts-node": {
+  // these options are overrides used only by ts-node
+  // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+  "compilerOptions": {
+    "module": "commonjs"
+  }
+},
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "es2021",
@@ -13,7 +20,6 @@
       "@db":["./infra/configs/db.ts"],
 
     },
-
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
   }

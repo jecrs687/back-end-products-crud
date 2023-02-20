@@ -10,8 +10,8 @@ import sales from '@api/routes/sales'
 import users from '@api/routes/users'
 
 const app = express()
-app.use(foward)
 app.use(authorization)
+app.use(foward)
 app.use(morgan('combined', { skip: (req, res) => process.env.NODE_ENV === 'test' }))
 app.use(root)
 app.use('/crud', crud)
