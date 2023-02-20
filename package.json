@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "npx jest --maxConcurrency=1 -- index",
-    "start": "ts-node -r tsconfig-paths/register index.ts"
+    "start": "ts-node -r tsconfig-paths/register index.ts",
+    "build":"npx tsc -p . && npx tsc-alias -p tsconfig.json"
   },
   "author": "Diogo Nunes",
   "license": "ISC",
