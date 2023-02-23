@@ -32,7 +32,7 @@ export class SalesService {
           }
      }
 
-     async put (): Promise<Sale[]> {
+     async put (salesDto): Promise<Sale[]> {
           try {
                return await this.salesRepository.findAll()
           } catch (err) {

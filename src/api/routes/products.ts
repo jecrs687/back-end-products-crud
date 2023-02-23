@@ -1,8 +1,8 @@
+import { ProductsUseCase } from '@api/use-cases/products/Products.usecase'
 import { Router } from 'express'
-import controller from '@infra/controllers/products'
 
 const router = Router()
-
-router.get('/', controller.index)
+const productUseCase = new ProductsUseCase()
+router.get('/', productUseCase.get)
 
 export default router

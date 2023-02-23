@@ -1,9 +1,10 @@
+import { CrudUseCase } from '@api/use-cases/crud/Crud.usecase'
 import { Router } from 'express'
-import controller from '@infra/controllers/crud'
 
 const router = Router()
 
-router.get('/', controller.index)
-router.post('/', controller.store)
+const crudUseCase = new CrudUseCase()
+router.get('/', crudUseCase.get)
+router.post('/', crudUseCase.store)
 
 export default router

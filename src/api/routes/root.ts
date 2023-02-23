@@ -1,9 +1,8 @@
+import { RootUseCase } from '@api/use-cases/root/Root.usecase'
 import { Router } from 'express'
 
 const router = Router()
-
-router.get('/', (req, res) => {
-     res.send('Hello World!')
-})
+const rootUseCase = new RootUseCase()
+router.get('/', rootUseCase.get)
 
 export default router

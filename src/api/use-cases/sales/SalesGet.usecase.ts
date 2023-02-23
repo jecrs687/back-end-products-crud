@@ -33,8 +33,8 @@ export class SalesUseCase {
      async put (req, res): Promise<void> {
           try {
                const salesDto: Sale[] = this.salesTransform.post(req, res)
-               const salesInverse = this.salesService.put(salesDto)
-               res.status(201).json({})
+               const salesInverse = await this.salesService.put(salesDto)
+               res.status(201).json(salesInverse)
           } catch (err) {
                res.status(400).json({ error: err.message })
           }
@@ -43,8 +43,7 @@ export class SalesUseCase {
      @authMiddleware({ accessLevels: ['user'] })
      async delete (req, res): Promise<void> {
           try {
-               const salesDto: Sale[] = this.salesTransform.post(req, res)
-               const salesInverse = this.salesService.post(salesDto)
+               const id = req?.params?.id
                res.status(201).json({})
           } catch (err) {
                res.status(400).json({ error: err.message })
