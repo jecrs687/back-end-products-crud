@@ -35,7 +35,7 @@ export class Repository {
           return data
      }
 
-     async update ({ id, params }: { id: string, params: Record<string, string | number> }): Promise<boolean | ContextError> {
+     async update ({ id, params }: { id: string | number, params: Record<string, string | number> }): Promise<boolean | ContextError> {
           try {
                const updated = await db.query(
                     `
@@ -45,7 +45,7 @@ export class Repository {
                `)
                return !!updated
           } catch {
-               return new ContextError('Error on update product', this.context)
+               return new ContextError(`Error on update ${JSON.stringify({ id, params })}`, this.context)
           }
      }
 
@@ -57,19 +57,19 @@ export class Repository {
                `)
                return !!inserted
           } catch {
-               return new ContextError('Error on insert product', this.context)
+               return new ContextError(`Error on insert ${JSON.stringify(params)}`, this.context)
           }
      }
 
      async softDelete ({ id }: Record<any, string | number>): Promise<boolean | ContextError> {
           try {
-               const inserted = await db.query(`
-               INSERT INTO ${this.table} (deletedAt)
-               VALUES (DATETIME) where id = ${id}
+               const deleted = await db.query(`
+               UPDATE ${this.table} 
+               SET deletedAt = CURRENT_TIMESTAMP where id = ${id}
                `)
-               return !!inserted
+               return !!deleted
           } catch {
-               return new ContextError('Error on insert product', this.context)
+               return new ContextError(`Error on delete ${id}`, this.context)
           }
      }
 }

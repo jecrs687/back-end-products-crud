@@ -24,7 +24,7 @@ export class SalesUseCase {
      async post (req, res): Promise<void> {
           try {
                const salesDto: Sale[] = this.salesTransform.post(req, res)
-               const salesInverse = this.salesService.post(salesDto)
+               const salesInverse = await this.salesService.post(salesDto)
                res.status(201).json(salesInverse)
           } catch (err) {
                res.status(400).json({ error: err.message })
@@ -34,8 +34,9 @@ export class SalesUseCase {
      @authMiddleware({ accessLevels: ['user'] })
      async put (req, res): Promise<void> {
           try {
-               const salesDto: Sale[] = this.salesTransform.post(req, res)
-               const salesInverse = await this.salesService.put(salesDto)
+               const { id } = req?.params
+               const salesDto: Partial<Sale> = this.salesTransform.put(req, res)
+               const salesInverse = await this.salesService.put(id, salesDto)
                res.status(201).json(salesInverse)
           } catch (err) {
                res.status(400).json({ error: err.message })

@@ -1,8 +1,8 @@
-import { number, object, string } from 'zod'
+import { number, object } from 'zod'
 
 export const salesSchema = object({
-     productId: string(),
-     userId: string(),
+     productId: number(),
+     userId: number(),
      quantity: number().min(0),
      value: number().min(0)
 })

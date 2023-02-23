@@ -15,12 +15,10 @@ export class SalesTransform {
           }
      }
 
-     put (req, res): Sale[] {
+     put (req, res): Partial<Sale> {
           try {
-               const { userId, items } = req.body
-               const saleDto: Sale[] = items.map(item => {
-                    return salesSchema.partial({ ...item, userId })
-               })
+               const saleDto: Partial<any> = salesSchema.partial().parse(req.body)
+
                return saleDto
           } catch (err) {
                res.status(400).json({ error: err.message })

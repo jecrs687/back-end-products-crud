@@ -1,21 +1,20 @@
 import { type ISale } from '@domain/entities/sale.entity'
-import { randomUUID } from 'crypto'
 interface props {
-     id?: string
+     id?: number
      productId: string
      userId: string
      quantity: number
      value: number
 }
 export class Sale implements ISale {
-     id: string
+     id: number
      productId: string
      userId: string
      quantity: number
      value: number
 
      constructor ({ productId, userId, quantity, value, id }: props) {
-          this.id = id || randomUUID()
+          this.id = id || Math.floor(Math.random() * 1000000)
           this.productId = productId
           this.userId = userId
           this.quantity = quantity

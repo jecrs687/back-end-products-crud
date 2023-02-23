@@ -9,15 +9,15 @@ export class SalesService {
           this.post = this.post.bind(this)
      }
 
-     post (salesDto): Sale[] {
+     async post (salesDto): Promise<Sale[]> {
           try {
                const sales = []
                salesDto.forEach(async sale => {
                     sales.push(new Sale(sale))
                })
-               sales.forEach(async sale => {
+               for (const sale of sales) {
                     await this.salesRepository.insert(sale)
-               })
+               }
                return sales
           } catch (err) {
                throw new Error(err)
@@ -32,9 +32,10 @@ export class SalesService {
           }
      }
 
-     async put (salesDto): Promise<Sale[]> {
+     async put (id: number, salesDto: Partial<Sale>): Promise<Sale[]> {
           try {
-               return await this.salesRepository.findAll()
+               await this.salesRepository.update({ id, params: salesDto })
+               return await this.salesRepository.findAll<Sale>({ id })
           } catch (err) {
                throw new Error(err)
           }
@@ -42,8 +43,9 @@ export class SalesService {
 
      async softDelete ({ id }): Promise<Sale[]> {
           try {
+               const sales = await this.salesRepository.findAll<Sale>({ id })
+               if (!sales.length) return sales
                await this.salesRepository.softDelete({ id })
-               const sales = await this.salesRepository.findAllWithDeleteds<Sale>({ id })
                return sales
           } catch (err) {
                throw new Error(err)
