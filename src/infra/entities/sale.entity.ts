@@ -1,14 +1,20 @@
 import { type ISale } from '@domain/entities/sale.entity'
-
+interface props {
+     id?: number
+     productId: string
+     userId: string
+     quantity: number
+     value: number
+}
 export class Sale implements ISale {
-     id: string
+     id: number
      productId: string
      userId: string
      quantity: number
      value: number
 
-     constructor (id: string, productId: string, userId: string, quantity: number, value: number) {
-          this.id = id
+     constructor ({ productId, userId, quantity, value, id }: props) {
+          this.id = id || Math.floor(Math.random() * 1000000)
           this.productId = productId
           this.userId = userId
           this.quantity = quantity

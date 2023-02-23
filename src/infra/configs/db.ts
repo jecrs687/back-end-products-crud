@@ -1,11 +1,14 @@
-import { Database } from 'sqlite3'
+import { Database } from 'sqlite3';
 
 const db = new Database(':memory:')
 
 db.serialize(async () => {
      (() => {
           db.run(
-               'CREATE TABLE users (id INTEGER PRIMARY KEY, name STRING, balance INTEGER)'
+               `
+               CREATE TABLE users 
+               (id INTEGER PRIMARY KEY, name STRING, balance INTEGER, deletedAt DATETIME)
+               `
           )
           const stmt = db.prepare('INSERT INTO users (name,balance) values (?, ?)')
           stmt.run('Diogo', 100)
@@ -18,7 +21,10 @@ db.serialize(async () => {
                ['PRODUCT 003', 30]
           ]
           db.run(
-               'CREATE TABLE products (id INTEGER PRIMARY KEY, name STRING, stock INTEGER, value INTEGER)'
+               `
+               CREATE TABLE products 
+               (id INTEGER PRIMARY KEY, name STRING, stock INTEGER, value INTEGER, deletedAt DATETIME)
+               `
           )
           const stmt = db.prepare(
                `INSERT INTO products (name, value) values ${products
@@ -31,7 +37,10 @@ db.serialize(async () => {
      (() => {
           const inventories = [[1, 100], [2, 100], [3, 100], [3, -60]]
           db.run(
-               'CREATE TABLE inventories (id INTEGER PRIMARY KEY, productId INTEGER, value INTEGER)'
+               `
+               CREATE TABLE inventories 
+               (id INTEGER PRIMARY KEY, productId INTEGER, value INTEGER, deletedAt DATETIME)
+               `
           )
           const stmt = db.prepare(
                'INSERT INTO inventories (productId, value) values (?, ?)'
@@ -43,7 +52,10 @@ db.serialize(async () => {
      })();
      (() => {
           db.run(
-               'CREATE TABLE sales (id INTEGER PRIMARY KEY, productId INTEGER, userId INTEGER, quantity INTEGER, value INTEGER)'
+               `
+               CREATE TABLE sales 
+               (id INTEGER PRIMARY KEY, productId INTEGER, userId INTEGER, quantity INTEGER, value INTEGER, deletedAt DATETIME)
+               `
           )
      })()
 })

@@ -1,9 +1,12 @@
+import { SalesUseCase } from '@api/use-cases/sales/Sales.usecase'
 import { Router } from 'express'
-import controller from '@infra/controllers/sales'
 
 const router = Router()
 
-router.get('/', controller.index)
-router.post('/', controller.store)
+const salesUseCase = new SalesUseCase()
+router.get('/', salesUseCase.get)
+router.put('/:id', salesUseCase.put)
+router.delete('/:id', salesUseCase.delete)
+router.post('/', salesUseCase.post)
 
 export default router

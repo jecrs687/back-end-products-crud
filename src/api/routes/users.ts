@@ -1,8 +1,8 @@
+import { UsersUseCase } from '@api/use-cases/users/Users.usecase'
 import { Router } from 'express'
-import controller from '@infra/controllers/users'
 
 const router = Router()
-
-router.get('/', controller.index)
+const usersUseCase = new UsersUseCase()
+router.get('/', usersUseCase.get)
 
 export default router
