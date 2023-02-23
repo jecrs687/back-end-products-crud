@@ -7,7 +7,6 @@ const salesUseCase = new SalesUseCase()
 router.get('/', salesUseCase.get)
 router.put('/', salesUseCase.put)
 router.delete('/:id', salesUseCase.delete)
-
 router.post('/', salesUseCase.post)
 
 export default router

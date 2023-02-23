@@ -10,6 +10,8 @@ export class SalesUseCase {
      constructor () {
           this.get = this.get.bind(this)
           this.post = this.post.bind(this)
+          this.delete = this.delete.bind(this)
+          this.put = this.put.bind(this)
      }
 
      @authMiddleware({ accessLevels: ['user'] })
@@ -43,8 +45,9 @@ export class SalesUseCase {
      @authMiddleware({ accessLevels: ['user'] })
      async delete (req, res): Promise<void> {
           try {
-               const id = req?.params?.id
-               res.status(201).json({})
+               const id = +req?.params?.id
+               const sales = await this.salesService.softDelete({ id })
+               res.status(201).json(sales)
           } catch (err) {
                res.status(400).json({ error: err.message })
           }

@@ -9,16 +9,29 @@ export class Repository {
           this.context = context
      }
 
-     async findOne<T>(params: Record<string, string | number>): Promise<T[]> {
+     async findOne<T>(params?: Record<string, string | number>): Promise<T[]> {
           const data: T[] = await db.query(`
           SELECT * FROM ${this.table} 
-          WHERE ${Object.keys(params).map(key => `${key} = ${params[key]}`).join(' AND ')}  
+          WHERE deletedAt IS NULL
+          ${params ? `AND ${Object.keys(params).map(key => `${key} = ${params[key]}`).join(' AND ')}` : ''} 
           LIMIT 1`)
           return data
      }
 
-     async findAll<T>(): Promise<T[]> {
-          const data: T[] = await db.query(`SELECT * FROM ${this.table}`)
+     async findAll<T>(params?: Record<string, string | number>): Promise<T[]> {
+          const data: T[] = await db.query(`
+          SELECT * FROM ${this.table} 
+          WHERE deletedAt IS NULL
+          ${params ? `AND ${Object.keys(params).map(key => `${key} = ${params[key]}`).join(' AND ')}` : ''}
+          `)
+          return data
+     }
+
+     async findAllWithDeleteds<T>(params?: Record<string, string | number>): Promise<T[]> {
+          const data: T[] = await db.query(`
+          SELECT * FROM ${this.table} 
+          ${params ? `WHERE ${Object.keys(params).map(key => `${key} = ${params[key]}`).join(' AND ')}` : ''}
+          `)
           return data
      }
 
@@ -36,11 +49,23 @@ export class Repository {
           }
      }
 
-     async insert (params: Record<any, any>): Promise<boolean | ContextError> {
+     async insert (params: Record<any, string>): Promise<boolean | ContextError> {
           try {
                const inserted = await db.query(`
                INSERT INTO ${this.table} (${Object.keys(params).join(', ')})
                VALUES (${Object.values(params).map(value => `'${value}'`).join(', ')})
+               `)
+               return !!inserted
+          } catch {
+               return new ContextError('Error on insert product', this.context)
+          }
+     }
+
+     async softDelete ({ id }: Record<any, string | number>): Promise<boolean | ContextError> {
+          try {
+               const inserted = await db.query(`
+               INSERT INTO ${this.table} (deletedAt)
+               VALUES (DATETIME) where id = ${id}
                `)
                return !!inserted
           } catch {

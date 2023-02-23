@@ -40,9 +40,11 @@ export class SalesService {
           }
      }
 
-     async softDelete (): Promise<Sale[]> {
+     async softDelete ({ id }): Promise<Sale[]> {
           try {
-               return await this.salesRepository.findAll()
+               await this.salesRepository.softDelete({ id })
+               const sales = await this.salesRepository.findAllWithDeleteds<Sale>({ id })
+               return sales
           } catch (err) {
                throw new Error(err)
           }

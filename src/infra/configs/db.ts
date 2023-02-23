@@ -7,7 +7,7 @@ db.serialize(async () => {
           db.run(
                `
                CREATE TABLE users 
-               (id INTEGER PRIMARY KEY, name STRING, balance INTEGER, deletedAt DATETIME DEFAULT CURRENT_TIMESTAMP)
+               (id INTEGER PRIMARY KEY, name STRING, balance INTEGER, deletedAt DATETIME)
                `
           )
           const stmt = db.prepare('INSERT INTO users (name,balance) values (?, ?)')
@@ -23,7 +23,7 @@ db.serialize(async () => {
           db.run(
                `
                CREATE TABLE products 
-               (id INTEGER PRIMARY KEY, name STRING, stock INTEGER, value INTEGER, deletedAt DATETIME DEFAULT CURRENT_TIMESTAMP)
+               (id INTEGER PRIMARY KEY, name STRING, stock INTEGER, value INTEGER, deletedAt DATETIME)
                `
           )
           const stmt = db.prepare(
@@ -39,7 +39,7 @@ db.serialize(async () => {
           db.run(
                `
                CREATE TABLE inventories 
-               (id INTEGER PRIMARY KEY, productId INTEGER, value INTEGER, deletedAt DATETIME DEFAULT CURRENT_TIMESTAMP)
+               (id INTEGER PRIMARY KEY, productId INTEGER, value INTEGER, deletedAt DATETIME)
                `
           )
           const stmt = db.prepare(
@@ -54,7 +54,7 @@ db.serialize(async () => {
           db.run(
                `
                CREATE TABLE sales 
-               (id INTEGER PRIMARY KEY, productId INTEGER, userId INTEGER, quantity INTEGER, value INTEGER, deletedAt DATETIME DEFAULT CURRENT_TIMESTAMP)
+               (id INTEGER PRIMARY KEY, productId INTEGER, userId INTEGER, quantity INTEGER, value INTEGER, deletedAt DATETIME)
                `
           )
      })()
