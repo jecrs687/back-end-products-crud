@@ -18,6 +18,8 @@
         "@typescript-eslint/strict-boolean-expressions": 0,
         "@typescript-eslint/no-invalid-void-type": 0,
         "@typescript-eslint/no-misused-promises": 0,
-        "@typescript-eslint/indent": ["error", 5]
+        "@typescript-eslint/indent": ["error", 5],
+        "@typescript-eslint/no-confusing-void-expression":0,
+        "@typescript-eslint/no-useless-constructor": 0
     }
 }
