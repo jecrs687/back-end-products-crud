@@ -1,0 +1,5 @@
+require('./001.express.test')
+require('./002.users.test')
+require('./003.products.test')
+require('./004.inventories.test')
+require('./005.sales.test')
